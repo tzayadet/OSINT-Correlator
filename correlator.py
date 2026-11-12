@@ -1,24 +1,40 @@
-import json, argparse, sys, requests, socket, ipaddress
+#!/usr/bin/env python3
+"""Basic DNS and reverse-DNS enrichment for a domain or IP address."""
+from __future__ import annotations
 
-def resolve_dns(domain):
-    try: return socket.gethostbyname(domain)
-    except: return None
+import argparse
+import ipaddress
+import json
+import socket
 
-def reverse_dns(ip):
-    try: return socket.gethostbyaddr(ip)[0]
-    except: return None
 
-def enrich(target):
-    res = {"target": target, "type": "domain" if "." in target else "ip", "dns": None, "rdns": None}
-    if res["type"] == "domain":
-        res["dns"] = resolve_dns(target)
-        if res["dns"]: res["rdns"] = reverse_dns(res["dns"])
+def enrich(target: str) -> dict:
+    result = {"target": target, "type": None, "dns": None, "rdns": None}
+    try:
+        address = ipaddress.ip_address(target)
+    except ValueError:
+        result["type"] = "domain"
+        try:
+            result["dns"] = socket.gethostbyname(target)
+            result["rdns"] = socket.gethostbyaddr(result["dns"])[0]
+        except (socket.gaierror, OSError):
+            pass
     else:
-        res["rdns"] = reverse_dns(target)
-    return res
+        result["type"] = "ip"
+        try:
+            result["rdns"] = socket.gethostbyaddr(str(address))[0]
+        except (socket.herror, socket.gaierror, OSError):
+            pass
+    return result
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("target", help="Domain name or IPv4/IPv6 address")
+    args = parser.parse_args()
+    print(json.dumps(enrich(args.target), indent=2, ensure_ascii=False))
+    return 0
+
 
 if __name__ == "__main__":
-    p = argparse.ArgumentParser()
-    p.add_argument("target")
-    args = p.parse_args()
-    print(json.dumps(enrich(args.target), indent=2))
+    raise SystemExit(main())

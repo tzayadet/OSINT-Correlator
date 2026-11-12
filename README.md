@@ -1,13 +1,13 @@
 # OSINT Correlator
 
-Herramienta CLI sencilla para enriquecer un dominio o una dirección IP mediante resolución DNS y DNS inverso (PTR).
+Herramienta CLI para enriquecer dominios e IP mediante resolución DNS y DNS inverso (PTR).
 
 ## Requisitos
 
-- Python 3.10+
+- Python 3.10 o superior.
 - Sin dependencias externas.
 
-## Uso
+## Uso local
 
 ```bash
 python correlator.py example.com
@@ -15,18 +15,34 @@ python correlator.py 8.8.8.8
 python correlator.py 2001:4860:4860::8888
 ```
 
-La salida JSON contiene el objetivo, el tipo detectado, la resolución DNS y el resultado PTR cuando está disponible.
+La salida JSON incluye el objetivo, el tipo detectado, la resolución DNS y el resultado PTR cuando está disponible.
+
+## Docker
+
+Construir la imagen:
+
+```bash
+docker build -t osint-correlator .
+```
+
+Consultar un dominio:
+
+```bash
+docker run --rm osint-correlator example.com
+```
+
+La resolución utiliza el DNS disponible dentro del contenedor. Los resultados pueden variar según la red y el resolver configurado.
 
 ## Funcionamiento
 
-- Las direcciones IPv4 e IPv6 se identifican con el módulo estándar `ipaddress`.
+- IPv4 e IPv6 se identifican mediante el módulo estándar `ipaddress`.
 - Los dominios se resuelven mediante el resolver DNS del sistema.
 - Para las IP se intenta una consulta de DNS inverso.
 - Los errores de resolución se reflejan como campos nulos.
 
-## Limitaciones
+## Limitaciones y uso responsable
 
-No es una plataforma de atribución ni una herramienta de escaneo. Solo consulta información DNS disponible para el resolver configurado. Los resultados pueden variar según la red y el momento de la consulta.
+No es una plataforma de atribución ni una herramienta de escaneo. Solo consulta información DNS disponible para el resolver configurado. No realiza enumeración masiva, escaneo de puertos ni atribución de infraestructura.
 
 Realiza consultas únicamente dentro del marco legal y respetando las políticas de uso aplicables.
 

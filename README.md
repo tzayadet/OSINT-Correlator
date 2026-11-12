@@ -49,3 +49,10 @@ Realiza consultas únicamente dentro del marco legal y respetando las políticas
 ## Licencia
 
 Consulta [LICENSE](LICENSE).
+
+
+## Project showcase
+
+Static overview and synthetic JSON example: https://tzayadet.github.io/OSINT-Correlator/
+
+The page does not execute DNS queries. The CLI performs DNS and reverse-DNS lookups using the system resolver; it is not a scanner or attribution platform.

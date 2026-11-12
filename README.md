@@ -1,6 +1,8 @@
-# OSINT Correlator
+# DNS Intelligence & Enrichment
 
 Herramienta CLI para enriquecer dominios e IP mediante resolución DNS y DNS inverso (PTR).
+
+[![Python tests](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/tests.yml/badge.svg)](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/tests.yml) · [![Container build](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/container-build.yml/badge.svg)](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/container-build.yml)
 
 ## Requisitos
 
@@ -10,12 +12,12 @@ Herramienta CLI para enriquecer dominios e IP mediante resolución DNS y DNS inv
 ## Uso local
 
 ```bash
-python correlator.py example.com
+python dns_enrichment.py example.com
 python correlator.py 8.8.8.8
 python correlator.py 2001:4860:4860::8888
 ```
 
-La salida JSON incluye el objetivo, el tipo detectado, la resolución DNS y el resultado PTR cuando está disponible.
+La salida JSON incluye el objetivo, el tipo detectado, todas las direcciones IPv4/IPv6 resueltas, un campo `dns` compatible con la salida anterior y el resultado PTR cuando está disponible. Los dominios internacionalizados se normalizan mediante IDNA y las entradas inválidas se rechazan.
 
 ## Docker
 
@@ -36,7 +38,7 @@ La resolución utiliza el DNS disponible dentro del contenedor. Los resultados p
 ## Funcionamiento
 
 - IPv4 e IPv6 se identifican mediante el módulo estándar `ipaddress`.
-- Los dominios se resuelven mediante el resolver DNS del sistema.
+- Los dominios se resuelven mediante `getaddrinfo`, admitiendo registros IPv4 e IPv6, y el nombre se normaliza con IDNA.
 - Para las IP se intenta una consulta de DNS inverso.
 - Los errores de resolución se reflejan como campos nulos.
 

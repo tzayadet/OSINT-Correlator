@@ -35,9 +35,15 @@ docker run --rm dns-intelligence example.com
 
 La salida incluye el objetivo, el tipo detectado, las direcciones resueltas y el resultado PTR cuando está disponible. Los resultados dependen del resolver y de la red desde la que se ejecuta.
 
-## Estado de la demo
+## Publicar el showcase
 
-El showcase estático se encuentra en `docs/index.html`. La publicación de GitHub Pages sigue pendiente de activar en **Settings → Pages** y de configurar la variable de Actions `ENABLE_PAGES=true`.
+El showcase estático se encuentra en [docs/index.html](docs/index.html). Para publicarlo:
+
+1. En **Settings → Pages**, selecciona **GitHub Actions** como origen.
+2. En **Settings → Secrets and variables → Actions → Variables**, crea `ENABLE_PAGES` con valor `true`.
+3. Ejecuta **Deploy OSINT-Correlator showcase to GitHub Pages** desde Actions.
+
+La demo utiliza datos de ejemplo. Las consultas DNS se ejecutan desde la herramienta CLI, no desde el navegador.
 
 ## Alcance
 

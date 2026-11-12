@@ -3,6 +3,9 @@ name: Deploy static showcase
 on:
   push:
     branches: [main]
+    paths:
+      - "docs/**"
+      - ".github/workflows/static-pages.yml"
   workflow_dispatch:
 
 permissions:

@@ -13,8 +13,8 @@ Herramienta CLI para enriquecer dominios e IP mediante resolución DNS y DNS inv
 
 ```bash
 python dns_enrichment.py example.com
-python correlator.py 8.8.8.8
-python correlator.py 2001:4860:4860::8888
+python dns_enrichment.py 8.8.8.8
+python dns_enrichment.py 2001:4860:4860::8888
 ```
 
 La salida JSON incluye el objetivo, el tipo detectado, todas las direcciones IPv4/IPv6 resueltas, un campo `dns` compatible con la salida anterior y el resultado PTR cuando está disponible. Los dominios internacionalizados se normalizan mediante IDNA y las entradas inválidas se rechazan.

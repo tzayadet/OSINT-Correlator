@@ -4,5 +4,5 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
 WORKDIR /app
-COPY correlator.py .
-ENTRYPOINT ["python", "correlator.py"]
+COPY dns_enrichment.py .
+ENTRYPOINT ["python", "dns_enrichment.py"]

@@ -59,6 +59,6 @@ Consulta [LICENSE](LICENSE).
 
 ## Project showcase
 
-Static overview and synthetic JSON example: https://tzayadet.github.io/OSINT-Correlator/
+Showcase source: `docs/index.html` (synthetic JSON only). GitHub Pages deployment is pending repository-level Pages activation.
 
 The page does not execute DNS queries. The CLI performs DNS and reverse-DNS lookups using the system resolver; it is not a scanner or attribution platform.

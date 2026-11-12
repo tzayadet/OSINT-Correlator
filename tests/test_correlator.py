@@ -16,15 +16,20 @@ class DnsEnrichmentTests(unittest.TestCase):
 
     @patch("dns_enrichment.socket.gethostbyaddr")
     @patch("dns_enrichment.socket.getaddrinfo")
-    def test_domain_returns_ipv4_and_ipv6_records(self, getaddrinfo, reverse_dns):
+    def test_domain_returns_numerically_sorted_ipv4_and_ipv6(self, getaddrinfo, reverse_dns):
         getaddrinfo.return_value = [
+            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("203.0.113.10", 0)),
+            (socket.AF_INET6, socket.SOCK_STREAM, 6, "", ("2001:db8::2", 0, 0, 0)),
+            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("203.0.113.2", 0)),
             (socket.AF_INET6, socket.SOCK_STREAM, 6, "", ("2001:db8::1", 0, 0, 0)),
-            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("203.0.113.20", 0)),
         ]
-        reverse_dns.return_value = ("edge.example", [], ["203.0.113.20"])
+        reverse_dns.return_value = ("edge.example", [], ["203.0.113.2"])
         result = enrich("example.test")
-        self.assertEqual(result["addresses"], ["203.0.113.20", "2001:db8::1"])
-        self.assertEqual(result["dns"], "203.0.113.20")
+        self.assertEqual(
+            result["addresses"],
+            ["203.0.113.2", "203.0.113.10", "2001:db8::1", "2001:db8::2"],
+        )
+        self.assertEqual(result["dns"], "203.0.113.2")
         self.assertEqual(result["rdns"], "edge.example")
 
     @patch("dns_enrichment.socket.getaddrinfo", side_effect=socket.gaierror)

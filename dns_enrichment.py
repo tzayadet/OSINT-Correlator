@@ -25,6 +25,11 @@ def normalize_domain(value: str) -> str:
     return ascii_name
 
 
+def _ip_sort_key(value: str) -> tuple[int, int]:
+    address = ipaddress.ip_address(value)
+    return address.version, int(address)
+
+
 def enrich(target: str) -> dict:
     if not isinstance(target, str) or not target or target != target.strip():
         raise ValueError("Target must be a non-empty domain or IP address without surrounding spaces")
@@ -36,8 +41,11 @@ def enrich(target: str) -> dict:
         result["type"] = "domain"
         try:
             records = socket.getaddrinfo(hostname, None, type=socket.SOCK_STREAM)
-            result["addresses"] = sorted({record[4][0] for record in records}, key=lambda item: (":" in item, item))
-            ipv4 = next((item for item in result["addresses"] if ":" not in item), None)
+            result["addresses"] = sorted(
+                {record[4][0] for record in records},
+                key=_ip_sort_key,
+            )
+            ipv4 = next((item for item in result["addresses"] if ipaddress.ip_address(item).version == 4), None)
             result["dns"] = ipv4 or (result["addresses"][0] if result["addresses"] else None)
         except (socket.gaierror, OSError):
             pass

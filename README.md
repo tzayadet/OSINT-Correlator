@@ -42,6 +42,10 @@ La resolución utiliza el DNS disponible dentro del contenedor. Los resultados p
 - Para las IP se intenta una consulta de DNS inverso.
 - Los errores de resolución se reflejan como campos nulos.
 
+## Publicación de la demo
+
+La demo está preparada en `docs/index.html`. Para publicarla, activa GitHub Pages en **Settings → Pages → Build and deployment → Source → GitHub Actions** y crea la variable de repositorio `ENABLE_PAGES=true` en **Settings → Secrets and variables → Actions → Variables**. El workflow queda deliberadamente inactivo hasta que esa configuración exista, evitando ejecuciones fallidas mientras Pages no esté habilitado.
+
 ## Limitaciones y uso responsable
 
 No es una plataforma de atribución ni una herramienta de escaneo. Solo consulta información DNS disponible para el resolver configurado. No realiza enumeración masiva, escaneo de puertos ni atribución de infraestructura.

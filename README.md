@@ -44,7 +44,7 @@ docker run --rm dns-intelligence example.com
 
 ## Showcase
 
-The static showcase source is available in [docs/index.html](docs/index.html). It uses synthetic examples and reserved documentation IP ranges. It does not perform live DNS queries in the browser. GitHub Pages is not currently confirmed as published for this repository.
+The static showcase source is available in [docs/index.html](docs/index.html). It uses synthetic examples and reserved documentation IP ranges. It does not perform live DNS queries in the browser. The deployment workflow is ready; GitHub Pages must first be enabled in repository settings with GitHub Actions as the source.
 
 ## Scope
 

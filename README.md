@@ -1,24 +1,32 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/OSINT-DNS_INTELLIGENCE-101010?style=for-the-badge&labelColor=050805&color=00FF41" alt="DNS Intelligence"/>
+  <img src="https://img.shields.io/badge/PYTHON-CLI-101010?style=for-the-badge&logo=python&logoColor=00FF41" alt="Python CLI"/>
+</p>
+
 # DNS Intelligence & Enrichment
 
-CLI en Python para consultar registros DNS y DNS inverso de dominios e IP. Admite IPv4, IPv6 y dominios internacionalizados.
+Consultas DNS y reverse DNS para dominios e indicadores IP, con soporte IPv4, IPv6 y normalización IDNA. Una utilidad pequeña, directa y pensada para integrarse en flujos de análisis.
+
+<p align="center">
+  <a href="https://tzayadet.github.io/OSINT-Correlator/"><strong>LIVE SHOWCASE ↗</strong></a> ·
+  <a href="https://github.com/tzayadet/OSINT-Correlator"><strong>SOURCE CODE</strong></a>
+</p>
 
 [![Tests](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/tests.yml/badge.svg)](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/tests.yml) · [![Docker](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/container-build.yml/badge.svg)](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/container-build.yml)
 
-**Demo:** [ver showcase](docs/index.html) · **Código:** [dns_enrichment.py](dns_enrichment.py)
+> El showcase utiliza resultados ficticios para enseñar el formato de salida. Las consultas reales se ejecutan desde la CLI, no desde el navegador.
 
-> La página de muestra utiliza datos de ejemplo. Las consultas DNS se ejecutan desde la herramienta CLI, no desde el navegador.
+## What it does
 
-## Funcionalidad
+- Resuelve registros DNS para dominios.
+- Consulta PTR para direcciones IPv4 e IPv6.
+- Normaliza dominios internacionalizados mediante IDNA.
+- Valida entradas y devuelve resultados estructurados en JSON.
+- Permite ejecución local o mediante Docker.
 
-- Resolución DNS para IPv4 e IPv6.
-- Consultas PTR para direcciones IP.
-- Normalización IDNA de dominios internacionalizados.
-- Validación de entradas y salida JSON.
-- Ejecución local o mediante Docker.
+## Quick start
 
-## Requisitos y uso
-
-Python 3.10 o superior. No necesita dependencias externas.
+**Requirements:** Python 3.10+. No external Python dependencies.
 
 ```bash
 python dns_enrichment.py example.com
@@ -26,29 +34,29 @@ python dns_enrichment.py 8.8.8.8
 python dns_enrichment.py 2001:4860:4860::8888
 ```
 
-Con Docker:
+**Docker**
 
 ```bash
 docker build -t dns-intelligence .
 docker run --rm dns-intelligence example.com
 ```
 
-La salida incluye el objetivo, el tipo detectado, las direcciones resueltas y el resultado PTR cuando está disponible. Los resultados dependen del resolver y de la red desde la que se ejecuta.
+## Project layout
 
-## Publicar el showcase
+| Path | Purpose |
+|---|---|
+| `dns_enrichment.py` | DNS and reverse-DNS CLI |
+| `docs/` | Static project showcase |
+| `.github/workflows/` | Tests, container build and Pages deployment |
 
-El showcase estático se encuentra en [docs/index.html](docs/index.html). Para publicarlo:
+## Scope & limitations
 
-1. En **Settings → Pages**, selecciona **GitHub Actions** como origen.
-2. En **Settings → Secrets and variables → Actions → Variables**, crea `ENABLE_PAGES` con valor `true`.
-3. Ejecuta **Deploy OSINT-Correlator showcase to GitHub Pages** desde Actions.
+The tool queries DNS through the resolver configured by the operating system. It does not perform port scanning, subdomain brute forcing, bulk infrastructure enumeration or threat attribution. Results depend on resolver behaviour and network conditions.
 
-La demo utiliza datos de ejemplo. Las consultas DNS se ejecutan desde la herramienta CLI, no desde el navegador.
+## Deployment
 
-## Alcance
+The static showcase is published through GitHub Pages. The workflow is `.github/workflows/pages.yml`; it deploys the `docs/` directory when Pages is configured and the repository variable `ENABLE_PAGES=true` is set.
 
-Esta herramienta no realiza escaneo de puertos, enumeración masiva ni atribución de infraestructura. Consulta únicamente DNS mediante el resolver del sistema.
+## License
 
-## Licencia
-
-Consulta [LICENSE](LICENSE).
+See [LICENSE](LICENSE).

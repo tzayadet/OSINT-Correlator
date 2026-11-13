@@ -1,25 +1,30 @@
-# DNS Intelligence & Enrichment
-
-A lightweight Python CLI for DNS and reverse-DNS enrichment. It accepts domain names, IPv4 and IPv6 indicators, normalizes internationalized domain names (IDNA), and returns structured results.
-
 <p align="center">
-  <a href="https://github.com/tzayadet/OSINT-Correlator"><img src="https://img.shields.io/badge/SOURCE-GITHUB-161b22?style=flat-square&logo=github" alt="Source code"></a>
-  <a href="docs/index.html"><img src="https://img.shields.io/badge/SHOWCASE-SOURCE-00a86b?style=flat-square" alt="Showcase source"></a>
+  <img src="https://img.shields.io/badge/OSINT-DNS_INTELLIGENCE-101010?style=for-the-badge&labelColor=050805&color=00FF41" alt="DNS Intelligence"/>
+  <img src="https://img.shields.io/badge/PYTHON-CLI-101010?style=for-the-badge&labelColor=050805&logo=python&logoColor=00FF41" alt="Python CLI"/>
 </p>
 
-[![Tests](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/tests.yml/badge.svg)](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/tests.yml) · [![Container build](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/container-build.yml/badge.svg)](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/container-build.yml)
+# DNS Intelligence & Enrichment
 
-## What it does
+A small Python CLI for DNS and reverse-DNS enrichment. It accepts domain names, IPv4 and IPv6 indicators, normalizes internationalized domain names (IDNA), and returns structured JSON.
 
-- Resolves DNS records for a domain through the system resolver.
-- Performs reverse PTR lookups for IPv4 and IPv6 addresses.
+<p align="center">
+  <a href="https://tzayadet.github.io/OSINT-Correlator/"><strong>LIVE SHOWCASE ↗</strong></a> ·
+  <a href="https://github.com/tzayadet/OSINT-Correlator"><strong>SOURCE CODE</strong></a>
+</p>
+
+[![Tests](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/tests.yml/badge.svg)](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/tests.yml) · [![Container build](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/container-build.yml/badge.svg)](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/container-build.yml) · [![Pages](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/pages.yml/badge.svg)](https://github.com/tzayadet/OSINT-Correlator/actions/workflows/pages.yml)
+
+## Overview
+
+- Resolves A/AAAA addresses through the system resolver.
+- Performs reverse PTR lookups for IPv4 and IPv6.
 - Normalizes internationalized domain names using IDNA.
-- Validates input and returns structured JSON output.
-- Runs locally or in Docker.
+- Sorts returned addresses numerically and emits structured JSON.
+- Runs locally or in Docker without third-party Python packages.
 
 ## Run locally
 
-**Requirements:** Python 3.10 or later. No third-party Python packages are required.
+**Requirements:** Python 3.10+.
 
 ```bash
 python dns_enrichment.py example.com
@@ -39,27 +44,32 @@ docker run --rm dns-intelligence example.com
 | Path | Purpose |
 |---|---|
 | `dns_enrichment.py` | DNS and reverse-DNS CLI |
-| `docs/` | Static showcase with illustrative output |
-| `.github/workflows/` | Tests, container build and Pages workflow |
+| `docs/` | Static showcase with synthetic examples |
+| `tests/` | Unit tests for normalization and lookup handling |
+| `.github/workflows/` | Test, container and Pages automation |
 
 ## Showcase
 
-The static showcase source is available in [docs/index.html](docs/index.html). It uses synthetic examples and reserved documentation IP ranges. It does not perform live DNS queries in the browser. The deployment workflow is ready; GitHub Pages must first be enabled in repository settings with GitHub Actions as the source.
+The [live showcase](https://tzayadet.github.io/OSINT-Correlator/) demonstrates the output format using synthetic data and reserved documentation IP ranges. It does not perform live DNS queries in the browser.
 
-## Scope
+## Validation
 
-This project performs DNS enrichment only. It does not scan ports, enumerate subdomains, discover assets at scale or attribute infrastructure to threat actors. Results depend on the resolver configured by the operating system and on network conditions.
-
-## Tests
-
-Run the test suite with:
+Run the tests with the Python standard library:
 
 ```bash
-python -m pytest
+python -m unittest discover -s tests -v
 ```
 
-The repository also includes GitHub Actions checks for tests and container builds.
+GitHub Actions runs the test suite and container build. The Pages workflow publishes the static showcase when GitHub Pages is enabled with GitHub Actions as its source.
+
+## Scope and limitations
+
+This tool performs DNS enrichment only. It does not scan ports, enumerate subdomains, discover assets at scale or attribute infrastructure to threat actors. Results depend on the operating system's configured resolver and current network conditions. Failed lookups are represented as empty or null result fields; they are not proof that a domain or address does not exist.
+
+## Responsible use
+
+Use DNS data within the scope of an authorised assessment. DNS records are time-dependent and should be timestamped and independently verified before being used as evidence.
 
 ## License
 
-See [LICENSE](LICENSE) for the repository's licensing terms.
+See [LICENSE](LICENSE).

@@ -12,8 +12,10 @@ DOMAIN_LABEL = re.compile(r"^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$", re.IGNORECA
 
 
 def normalize_domain(value: str) -> str:
-    candidate = value.rstrip(".")
-    if not candidate or len(candidate) > 253:
+    if not isinstance(value, str) or not value or value != value.strip():
+        raise ValueError("Domain must be a non-empty string without surrounding spaces")
+    candidate = value[:-1] if value.endswith(".") else value
+    if not candidate or len(candidate) > 253 or candidate.endswith("."):
         raise ValueError("Invalid domain name")
     try:
         ascii_name = candidate.encode("idna").decode("ascii").lower()

@@ -43,8 +43,19 @@ class DnsEnrichmentTests(unittest.TestCase):
         self.assertEqual(normalize_domain("Exämple.test."), "xn--exmple-cua.test")
 
     def test_invalid_domain_is_rejected(self):
-        with self.assertRaises(ValueError):
-            enrich("bad domain.example")
+        for value in ("bad domain.example", "", "example..test", "example.test..", "-bad.example"):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    enrich(value)
+
+    def test_normalize_domain_rejects_non_string_and_surrounding_spaces(self):
+        for value in (None, " example.test", "example.test "):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    normalize_domain(value)
+
+    def test_normalize_domain_accepts_single_fully_qualified_dot(self):
+        self.assertEqual(normalize_domain("Example.TEST."), "example.test")
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@
 A small Python CLI for DNS and reverse-DNS enrichment. It accepts domain names, IPv4 and IPv6 indicators, normalizes internationalized domain names (IDNA), and returns structured JSON.
 
 <p align="center">
-  <a href="https://tzayadet.github.io/OSINT-Correlator/"><strong>LIVE SHOWCASE ↗</strong></a> ·
+  <a href="https://github.com/tzayadet/OSINT-Correlator/blob/main/docs/index.html"><strong>SHOWCASE SOURCE ↗</strong></a> ·
   <a href="https://github.com/tzayadet/OSINT-Correlator"><strong>SOURCE CODE</strong></a>
 </p>
 
@@ -50,7 +50,7 @@ docker run --rm dns-intelligence example.com
 
 ## Showcase
 
-The [live showcase](https://tzayadet.github.io/OSINT-Correlator/) demonstrates the output format using synthetic data and reserved documentation IP ranges. It does not perform live DNS queries in the browser.
+The [showcase source](docs/index.html) demonstrates the output format using synthetic data and reserved documentation IP ranges. It does not perform live DNS queries in the browser. To publish it, enable GitHub Pages with GitHub Actions as its source and set the repository variable `ENABLE_PAGES` to `true`. Until then, the deployment job is intentionally skipped.
 
 ## Validation
 
